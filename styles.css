@@ -1,0 +1,38 @@
+div > div{
+    display : grid;
+    gap: 10px;
+    grid-template-columns: 1fr 60px 60px;
+    justify-content : space-between;
+}
+
+
+.container{
+    display : flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
+    gap : 10px;
+    width : 700px;
+    margin : 0 auto;
+}
+
+button{
+    align-self: center;
+    border: 2px solid blue;
+    border-radius: 15px;
+    color: blue;
+    background-color: cyan;
+    padding: 10px 10px;
+}
+
+dialog{
+    background-color: whitesmoke;
+    border-radius: 15px;
+    opacity: .75;
+    padding: 20px;
+    box-shadow: 0 0 10px rgb(231, 17, 17);
+}  
+    
+::backdrop{
+    background-color: rgba(17, 1, 68, 0.5);
+}
