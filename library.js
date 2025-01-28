@@ -1,86 +1,96 @@
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
 
-const myLibrary = [];
-
-function Book(title, author, pages, read){
-    this.title = title;
-    this.author = author;
-    this.pages = !!pages ? pages : "unknown";
-    this.read = read;
-    this.info = function(){
+    info() {
         return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read ? "read" : "not read yet"}`;
     }
 
-    this.toggleRead = function(){
+    toggleRead() {
         this.read = !this.read;
     }
 }
 
-function addBookToLibrary(title, author, pages, read){
-    myLibrary.push(new Book(title, author, pages, read));
-    displayLibrary(container);
+class Library {
+    constructor() {
+        this.books = [];
+    }
+
+    push(book) {
+        this.books.push(book);
+    }
+
+    splice(index) {
+        this.books.splice(index, 1);
+    }
+
+    displayLibrary(container) {
+        container.innerHTML = ''; // Clear the container
+    
+        this.books.forEach((book, index) => {
+            const bookDiv = document.createElement('div');
+            const bookInfo = document.createElement('span');
+            bookInfo.textContent = book.info();
+    
+            const readButton = document.createElement('button');
+            readButton.textContent = 'Read';
+            readButton.onclick = function() {
+                book.toggleRead();
+                myLibrary.displayLibrary(container);
+            };
+    
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                myLibrary.splice(index, 1);
+                myLibrary.displayLibrary(container);
+            };
+    
+            bookDiv.appendChild(bookInfo);
+            bookDiv.appendChild(deleteButton);
+            bookDiv.appendChild(readButton);
+            container.appendChild(bookDiv);
+        });
+        container.appendChild(addButton);
+    }
+   
 }
 
-const container = document.createElement('div');
-container.className = 'container';
-const addButton = document.createElement('button');
+const myLibrary = new Library();
+
+function addBookToLibrary(title, author, pages, read){
+    myLibrary.push(new Book(title, author, pages, read));
+    myLibrary.displayLibrary(container);
+}
+
+const container = document.getElementById('container');
+const addButton = document.getElementById('button');
 
 
 function initiate() {
 
-    // Create the "Add Book" button
-    addButton.textContent = 'Add Book';
-    container.appendChild(addButton);
-    
-  
-
-    // Create the modal
-    const modal = document.createElement('dialog');
-    modal.setAttribute('id', 'modal');
-    modal.setAttribute('open', '');
-    modal.close();
-    
-
+    const modal = document.getElementById('modal');
     // Create the form
-    const form = document.createElement('form');
-
+    const form = document.getElementById('form');
     // Title input
-    const titleInput = document.createElement('input');
-    titleInput.type = 'text';
-    titleInput.placeholder = 'Title';
-    form.appendChild(titleInput);
-
+    const titleInput = document.getElementById('title');
     // Author input
-    const authorInput = document.createElement('input');
-    authorInput.type = 'text';
-    authorInput.placeholder = 'Author';
-    form.appendChild(authorInput);
-
+    const authorInput = document.getElementById('author');
     // Pages input
-    const pagesInput = document.createElement('input');
-    form.appendChild(pagesInput);
-
+    const pagesInput = document.getElementById('pages');
     // Read checkbox
-    const readInput = document.createElement('input');
-    readInput.type = 'checkbox';
-    const readLabel = document.createElement('label');
-    readLabel.textContent = 'Read';
-    form.appendChild(readLabel);
-    form.appendChild(readInput);
-
+    const readInput = document.getElementById('read');
     // Submit button
-    const submitButton = document.createElement('button');
-    submitButton.type = 'submit';
-    submitButton.textContent = 'Submit';
-    form.appendChild(submitButton);
-
+    const submitButton = document.getElementById('submit');
     // Cancel button
-    const cancelButton = document.createElement('button');
-    cancelButton.type = 'button';
-    cancelButton.textContent = 'Cancel';
+    const cancelButton = document.getElementById('cancel');
     cancelButton.onclick = function() {
         modal.close();
     };
-    form.appendChild(cancelButton);
 
     form.onsubmit = function(event) {
         event.preventDefault();
@@ -94,47 +104,12 @@ function initiate() {
 
     };
 
-    modal.appendChild(form);
-    document.body.appendChild(modal);
-
     addButton.onclick = function() {
         modal.showModal();
     };
-
-    // container.appendChild(addButton);
-    document.body.appendChild(container);
-    displayLibrary();
 }
 
-function displayLibrary() {
-    container.innerHTML = ''; // Clear the container
 
-    myLibrary.forEach((book, index) => {
-        const bookDiv = document.createElement('div');
-        const bookInfo = document.createElement('span');
-        bookInfo.textContent = book.info();
-
-        const readButton = document.createElement('button');
-        readButton.textContent = 'Read';
-        readButton.onclick = function() {
-            book.toggleRead();
-            displayLibrary(container);
-        };
-
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.onclick = function() {
-            myLibrary.splice(index, 1);
-            displayLibrary(container);
-        };
-
-        bookDiv.appendChild(bookInfo);
-        bookDiv.appendChild(deleteButton);
-        bookDiv.appendChild(readButton);
-        container.appendChild(bookDiv);
-    });
-    container.appendChild(addButton);
-}
 
 
  
