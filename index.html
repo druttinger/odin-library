@@ -7,6 +7,26 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <dialog id="modal">
+        <form id="form">
+            <label for="title">Title</label>
+            <input type="text" id="title" 
+                placeholder="Infinte Jest" required>
+            <label for="author">Author</label>
+            <input type="text" id="author" 
+                placeholder="David Foster Wallace" required>
+            <label for="pages">Pages</label>
+            <input type="number" id="pages" 
+                placeholder="1079">
+            <label for="read">Read</label>
+            <input type="checkbox" id="read">
+            <button type="submit" id="submit">Add</button>
+            <button id="cancel">Cancel</button>
+        </form>
+    </dialog>
+    <div id="container">
+        <button id="button">Add Book</button>
+    </div>
     <script src="library.js"></script>
 </body>
 </html>
